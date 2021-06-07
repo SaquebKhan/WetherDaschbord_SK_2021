@@ -3,13 +3,35 @@ $(document).ready(function(){
 var searchInput=document.getElementById("searchInput");
 var buttonSearch=document.getElementById("button-search");
 var oneDayContainer=document.querySelector(".one-day");
-var fiveDayContainer=document.querySelector(".five-day");
+var fiveDayContainer=document.querySelector(".five-day-forecast");
 var cityList =$("#city-list");
 var cities = [];
 var API_KEY = 'c40b28aa33c2bef2881ab9e4f13c3ef7';
 
+//Calling function init();
+init();
+
+//Function init();
+function init(){
+    //Get stored cities from localStorage
+    //Parsing the JSON string to an object
+    var storedCities = JSON.parse(localStorage.getItem("cities"));
+
+    // If cities were retrieved from localStorage, update the cities array to it
+    if (storedCities !== null) {
+        cities = storedCities;
+      }
+    // Render cities to the DOM
+    renderCities();
+    // console.log(cities);
+}
+
 $("#button-search").on("click", function() {
     var userSearch = $("#searchInput").val();
+
+    cities.push(userSearch);
+    renderCities();
+    storeCities();
 
     oneDay(userSearch);
     fiveday(userSearch);
@@ -55,6 +77,7 @@ function oneDay(userSearch){
 
         cardBody.append(mainh2, temphtml, humhtml, windhtml);
         card.append(cardBody);
+        $('.one-day').empty();
         $('.one-day').append(card)
 
         uvi(data.coord.lat, data.coord.lon)
@@ -81,45 +104,191 @@ function uvi(lat, lon) {
    })
 }
 function fiveday(userSearch){
-    var fiveapi=`api.openweathermap.org/data/2.5/forecast?q=${userSearch}&appid=c40b28aa33c2bef2881ab9e4f13c3ef7`
-    fetch(fiveday)
+    var fiveapi="https://api.openweathermap.org/data/2.5/forecast?q=" + userSearch + "&units=imperial&&appid=" + API_KEY;
+    fetch(fiveapi)
     .then(function(res){
         return res.json();
     })
     .then(function(data){
-    var fiveday
-    for(var i=0; i< data.list.length; i++) {
 
-    }
+    //DAY TWO
+    var temp=data.list[1].main.temp
+    var city=data.list[1].name
+    var hum=data.list[1].main.humidity
+    var wind=data.list[1].wind.speed
+
+
+    var mainh2=document.createElement('h2')
+    mainh2.setAttribute('class', 'card-title');
+    mainh2.textContent="Day 2";
+
+   var temphtml=document.createElement('p')
+    temphtml.setAttribute('class', 'card-text');
+    temphtml.textContent=`Temperature: ${temp} F`
+
+    var humhtml=document.createElement('p')
+    humhtml.setAttribute('class', 'card-text');
+    humhtml.textContent=`Humidity: ${hum}`
+
+    var windhtml=document.createElement('p')
+    windhtml.setAttribute('class', 'card-text');
+    windhtml.textContent=`Wind: ${wind}`
+
+    var card=document.createElement('div')
+    card.setAttribute('class', 'card')
+    var cardBody=document.createElement('div')
+    cardBody.setAttribute('class', 'card-body')
+
+
+    cardBody.append(mainh2, temphtml, humhtml, windhtml);
+    card.append(cardBody);
+    $('.two-day').empty();
+    $('.two-day').append(card)
+
+    //DAY THREE
+    var temp=data.list[2].main.temp
+    var city=data.list[2].name
+    var hum=data.list[2].main.humidity
+    var wind=data.list[2].wind.speed
+
+
+    var mainh2=document.createElement('h2')
+    mainh2.setAttribute('class', 'card-title');
+    mainh2.textContent="Day 3";
+
+   var temphtml=document.createElement('p')
+    temphtml.setAttribute('class', 'card-text');
+    temphtml.textContent=`Temperature: ${temp} F`
+
+    var humhtml=document.createElement('p')
+    humhtml.setAttribute('class', 'card-text');
+    humhtml.textContent=`Humidity: ${hum}`
+
+    var windhtml=document.createElement('p')
+    windhtml.setAttribute('class', 'card-text');
+    windhtml.textContent=`Wind: ${wind}`
+
+    var card=document.createElement('div')
+    card.setAttribute('class', 'card')
+    var cardBody=document.createElement('div')
+    cardBody.setAttribute('class', 'card-body')
+
+
+    cardBody.append(mainh2, temphtml, humhtml, windhtml);
+    card.append(cardBody);
+    $('.three-day').empty();
+    $('.three-day').append(card)
+    
+    //DAY FOUR
+    var temp=data.list[3].main.temp
+    var city=data.list[3].name
+    var hum=data.list[3].main.humidity
+    var wind=data.list[3].wind.speed
+
+
+    var mainh2=document.createElement('h2')
+    mainh2.setAttribute('class', 'card-title');
+    mainh2.textContent="Day 4";
+
+   var temphtml=document.createElement('p')
+    temphtml.setAttribute('class', 'card-text');
+    temphtml.textContent=`Temperature: ${temp} F`
+
+    var humhtml=document.createElement('p')
+    humhtml.setAttribute('class', 'card-text');
+    humhtml.textContent=`Humidity: ${hum}`
+
+    var windhtml=document.createElement('p')
+    windhtml.setAttribute('class', 'card-text');
+    windhtml.textContent=`Wind: ${wind}`
+
+    var card=document.createElement('div')
+    card.setAttribute('class', 'card')
+    var cardBody=document.createElement('div')
+    cardBody.setAttribute('class', 'card-body')
+
+
+    cardBody.append(mainh2, temphtml, humhtml, windhtml);
+    card.append(cardBody);
+    $('.four-day').empty();
+    $('.four-day').append(card)
+
+    //DAY FIVE
+    var temp=data.list[4].main.temp
+    var city=data.list[4].name
+    var hum=data.list[4].main.humidity
+    var wind=data.list[4].wind.speed
+
+
+    var mainh2=document.createElement('h2')
+    mainh2.setAttribute('class', 'card-title');
+    mainh2.textContent="Day 5";
+
+   var temphtml=document.createElement('p')
+    temphtml.setAttribute('class', 'card-text');
+    temphtml.textContent=`Temperature: ${temp} F`
+
+    var humhtml=document.createElement('p')
+    humhtml.setAttribute('class', 'card-text');
+    humhtml.textContent=`Humidity: ${hum}`
+
+    var windhtml=document.createElement('p')
+    windhtml.setAttribute('class', 'card-text');
+    windhtml.textContent=`Wind: ${wind}`
+
+    var card=document.createElement('div')
+    card.setAttribute('class', 'card')
+    var cardBody=document.createElement('div')
+    cardBody.setAttribute('class', 'card-body')
+
+
+    cardBody.append(mainh2, temphtml, humhtml, windhtml);
+    card.append(cardBody);
+    $('.five-day').empty();
+    $('.five-day').append(card)
     })
 }
 
-//oneDay();
+//Function StoreCities()
+function storeCities(){
+    // Stringify and set "cities" key in localStorage to cities array
+   localStorage.setItem("cities", JSON.stringify(cities));
+   console.log(localStorage);
+ }
 
-//define some global Variables
-//searchHistory (as a array)
-//apl url
-//api key
+ function renderCities() {
+    // Clear cityList element
+    // cityList.text = "";
+    // cityList.HTML = "";
+    cityList.empty();
+    
+    // Render a new li for each city
+    for (var i = 0; i < cities.length; i++) {
+      var city = cities[i];
+      
+      var li = $("<li>").text(city);
+      li.attr("id","listC");
+      li.attr("data-city", city);
+      li.attr("class", "list-group-item");
+      console.log(li);
+      cityList.prepend(li);
+    }
+    //Get Response weather for the first city only
+    if (!city){
+        return
+    } 
+    else{
+        oneDay(city);
+        fiveday(city)
+    };
+}   
 
-// Reference your DOM elements
-
-// function to push the searchHistory from user input
-    //allow access to the city name with its clicked
-
-// create a function to retrieve search history from local storage
-var cardHead = document.createElement('div');
-
-// function to display the current weather data and append information to the page
-
-// create second api call to retrieve the 5 day weather forecast and render to the page
-
-// create second api call
-// create variables to grab api response to be able to move insert api data into second api
-
-
-
-
-//function to get UV index and render to the page
-
-// create a handler to check search field and return data if no data is in search field return;
 })
+
+//Click function to each Li 
+$(document).on("click", "#listC", function() {
+    var thisCity = $(this).attr("data-city");
+    console.log(thisCity);
+    oneDay(thisCity);
+    fiveday(thisCity);
+  });
