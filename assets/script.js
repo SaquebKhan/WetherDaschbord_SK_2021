@@ -270,6 +270,7 @@ function storeCities(){
       li.attr("id","listC");
       li.attr("data-city", city);
       li.attr("class", "list-group-item");
+      //li.attr("onclick", "oneDay(Edison);");
       console.log(li);
       cityList.prepend(li);
     }
@@ -283,7 +284,7 @@ function storeCities(){
     };
 }   
 
-})
+
 
 //Click function to each Li 
 $(document).on("click", "#listC", function() {
@@ -292,3 +293,5 @@ $(document).on("click", "#listC", function() {
     oneDay(thisCity);
     fiveday(thisCity);
   });
+
+})
